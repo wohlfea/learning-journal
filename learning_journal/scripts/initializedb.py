@@ -25,7 +25,7 @@ def usage(argv):
     sys.exit(1)
 
 
-def initialize_db(argv=sys.argv):
+def main(argv=sys.argv):
     if len(argv) < 2:
         usage(argv)
     config_uri = argv[1]
@@ -35,6 +35,6 @@ def initialize_db(argv=sys.argv):
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
-    with transaction.manager:
-        entry = Entry(title, text)
-        DBSession.add(entry)
+    # with transaction.manager:
+    #     entry = Entry(title, text)
+    #     DBSession.add(entry)
