@@ -1,12 +1,14 @@
 CHANGES.txt
 MANIFEST.in
-README.txt
 development.ini
+paul.ini
 production.ini
+rick.ini
 setup.cfg
+setup.py
+tox.ini
 learning_journal/__init__.py
 learning_journal/models.py
-learning_journal/tests.py
 learning_journal/views.py
 learning_journal.egg-info/PKG-INFO
 learning_journal.egg-info/SOURCES.txt
@@ -30,3 +32,6 @@ learning_journal/static/theme.css
 learning_journal/static/theme.min.css
 learning_journal/static/transparent.gif
 learning_journal/templates/mytemplate.pt
+learning_journal/tests/__init__.py
+learning_journal/tests/conftest.py
+learning_journal/tests/test_models.py

@@ -1,0 +1,117 @@
+actionid: tox
+msg: packaging
+cmdargs: ['/Users/ricktesmond/401d2/week3/bin/python3', local('/Users/ricktesmond/401d2/week3/learning-journal/learning-journal/setup.py'), 'sdist', '--formats=zip', '--dist-dir', local('/Users/ricktesmond/401d2/week3/learning-journal/learning-journal/.tox/dist')]
+env: None
+
+running sdist
+running egg_info
+writing entry points to learning_journal.egg-info/entry_points.txt
+writing learning_journal.egg-info/PKG-INFO
+writing requirements to learning_journal.egg-info/requires.txt
+writing dependency_links to learning_journal.egg-info/dependency_links.txt
+writing top-level names to learning_journal.egg-info/top_level.txt
+reading manifest file 'learning_journal.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching '*.rst'
+warning: no files found matching '*.jpg' under directory 'learning_journal'
+warning: no files found matching '*.txt' under directory 'learning_journal'
+warning: no files found matching '*.mak' under directory 'learning_journal'
+warning: no files found matching '*.mako' under directory 'learning_journal'
+warning: no files found matching '*.js' under directory 'learning_journal'
+warning: no files found matching '*.html' under directory 'learning_journal'
+warning: no files found matching '*.xml' under directory 'learning_journal'
+writing manifest file 'learning_journal.egg-info/SOURCES.txt'
+warning: sdist: standard file not found: should have one of README, README.rst, README.txt
+
+running check
+warning: check: missing required meta-data: url
+
+warning: check: missing meta-data: if 'author' supplied, 'author_email' must be supplied too
+
+creating learning-journal-0.0
+creating learning-journal-0.0/learning_journal
+creating learning-journal-0.0/learning_journal.egg-info
+creating learning-journal-0.0/learning_journal/scripts
+creating learning-journal-0.0/learning_journal/static
+creating learning-journal-0.0/learning_journal/templates
+creating learning-journal-0.0/learning_journal/tests
+making hard links in learning-journal-0.0...
+hard linking CHANGES.txt -> learning-journal-0.0
+hard linking MANIFEST.in -> learning-journal-0.0
+hard linking development.ini -> learning-journal-0.0
+hard linking paul.ini -> learning-journal-0.0
+hard linking production.ini -> learning-journal-0.0
+hard linking rick.ini -> learning-journal-0.0
+hard linking setup.cfg -> learning-journal-0.0
+hard linking setup.py -> learning-journal-0.0
+hard linking tox.ini -> learning-journal-0.0
+hard linking learning_journal/__init__.py -> learning-journal-0.0/learning_journal
+hard linking learning_journal/models.py -> learning-journal-0.0/learning_journal
+hard linking learning_journal/views.py -> learning-journal-0.0/learning_journal
+hard linking learning_journal.egg-info/PKG-INFO -> learning-journal-0.0/learning_journal.egg-info
+hard linking learning_journal.egg-info/SOURCES.txt -> learning-journal-0.0/learning_journal.egg-info
+hard linking learning_journal.egg-info/dependency_links.txt -> learning-journal-0.0/learning_journal.egg-info
+hard linking learning_journal.egg-info/entry_points.txt -> learning-journal-0.0/learning_journal.egg-info
+hard linking learning_journal.egg-info/not-zip-safe -> learning-journal-0.0/learning_journal.egg-info
+hard linking learning_journal.egg-info/requires.txt -> learning-journal-0.0/learning_journal.egg-info
+hard linking learning_journal.egg-info/top_level.txt -> learning-journal-0.0/learning_journal.egg-info
+hard linking learning_journal/scripts/__init__.py -> learning-journal-0.0/learning_journal/scripts
+hard linking learning_journal/scripts/initializedb.py -> learning-journal-0.0/learning_journal/scripts
+hard linking learning_journal/static/favicon.ico -> learning-journal-0.0/learning_journal/static
+hard linking learning_journal/static/footerbg.png -> learning-journal-0.0/learning_journal/static
+hard linking learning_journal/static/headerbg.png -> learning-journal-0.0/learning_journal/static
+hard linking learning_journal/static/ie6.css -> learning-journal-0.0/learning_journal/static
+hard linking learning_journal/static/middlebg.png -> learning-journal-0.0/learning_journal/static
+hard linking learning_journal/static/pylons.css -> learning-journal-0.0/learning_journal/static
+hard linking learning_journal/static/pyramid-16x16.png -> learning-journal-0.0/learning_journal/static
+hard linking learning_journal/static/pyramid-small.png -> learning-journal-0.0/learning_journal/static
+hard linking learning_journal/static/pyramid.png -> learning-journal-0.0/learning_journal/static
+hard linking learning_journal/static/theme.css -> learning-journal-0.0/learning_journal/static
+hard linking learning_journal/static/theme.min.css -> learning-journal-0.0/learning_journal/static
+hard linking learning_journal/static/transparent.gif -> learning-journal-0.0/learning_journal/static
+hard linking learning_journal/templates/mytemplate.pt -> learning-journal-0.0/learning_journal/templates
+hard linking learning_journal/tests/__init__.py -> learning-journal-0.0/learning_journal/tests
+hard linking learning_journal/tests/conftest.py -> learning-journal-0.0/learning_journal/tests
+hard linking learning_journal/tests/test_models.py -> learning-journal-0.0/learning_journal/tests
+copying setup.cfg -> learning-journal-0.0
+Writing learning-journal-0.0/setup.cfg
+creating '.tox/dist/learning-journal-0.0.zip' and adding 'learning-journal-0.0' to it
+adding 'learning-journal-0.0/CHANGES.txt'
+adding 'learning-journal-0.0/development.ini'
+adding 'learning-journal-0.0/MANIFEST.in'
+adding 'learning-journal-0.0/paul.ini'
+adding 'learning-journal-0.0/PKG-INFO'
+adding 'learning-journal-0.0/production.ini'
+adding 'learning-journal-0.0/rick.ini'
+adding 'learning-journal-0.0/setup.cfg'
+adding 'learning-journal-0.0/setup.py'
+adding 'learning-journal-0.0/tox.ini'
+adding 'learning-journal-0.0/learning_journal/__init__.py'
+adding 'learning-journal-0.0/learning_journal/models.py'
+adding 'learning-journal-0.0/learning_journal/views.py'
+adding 'learning-journal-0.0/learning_journal/scripts/__init__.py'
+adding 'learning-journal-0.0/learning_journal/scripts/initializedb.py'
+adding 'learning-journal-0.0/learning_journal/static/favicon.ico'
+adding 'learning-journal-0.0/learning_journal/static/footerbg.png'
+adding 'learning-journal-0.0/learning_journal/static/headerbg.png'
+adding 'learning-journal-0.0/learning_journal/static/ie6.css'
+adding 'learning-journal-0.0/learning_journal/static/middlebg.png'
+adding 'learning-journal-0.0/learning_journal/static/pylons.css'
+adding 'learning-journal-0.0/learning_journal/static/pyramid-16x16.png'
+adding 'learning-journal-0.0/learning_journal/static/pyramid-small.png'
+adding 'learning-journal-0.0/learning_journal/static/pyramid.png'
+adding 'learning-journal-0.0/learning_journal/static/theme.css'
+adding 'learning-journal-0.0/learning_journal/static/theme.min.css'
+adding 'learning-journal-0.0/learning_journal/static/transparent.gif'
+adding 'learning-journal-0.0/learning_journal/templates/mytemplate.pt'
+adding 'learning-journal-0.0/learning_journal/tests/__init__.py'
+adding 'learning-journal-0.0/learning_journal/tests/conftest.py'
+adding 'learning-journal-0.0/learning_journal/tests/test_models.py'
+adding 'learning-journal-0.0/learning_journal.egg-info/dependency_links.txt'
+adding 'learning-journal-0.0/learning_journal.egg-info/entry_points.txt'
+adding 'learning-journal-0.0/learning_journal.egg-info/not-zip-safe'
+adding 'learning-journal-0.0/learning_journal.egg-info/PKG-INFO'
+adding 'learning-journal-0.0/learning_journal.egg-info/requires.txt'
+adding 'learning-journal-0.0/learning_journal.egg-info/SOURCES.txt'
+adding 'learning-journal-0.0/learning_journal.egg-info/top_level.txt'
+removing 'learning-journal-0.0' (and everything under it)
