@@ -60,6 +60,10 @@ MANIFEST.in
 CHANGES.txt
 templates/
 static/
+paul-sheridan-mockups/
+rick-mockups/
+rick.ini
+paul.ini
 
 
 # Sphinx documentation
