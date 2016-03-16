@@ -58,7 +58,6 @@ setup.cfg
 production.ini
 MANIFEST.in
 CHANGES.txt
-templates/
 static/
 paul-sheridan-mockups/
 rick-mockups/
