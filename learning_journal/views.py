@@ -1,5 +1,6 @@
 from pyramid.view import view_config
 from .models import (Entry, DBSession)
+from wtforms import Form, StringField, validators
 
 
 @view_config(route_name='index_route', renderer='templates/list.jinja2')
@@ -19,6 +20,10 @@ def entry_view(request):
     entry_data = DBSession.query(Entry).get(entry_id)
     # entry_data = DBSession.query(Entry).filter(Entry.id == entry_id).first()
     return {'entry': entry_data}
+
+
+class RegistrationForm(Form):
+    title = StringField('Title', [validators.Length(min=1, max=128), validators.])
 
 
 # use predicate to specify a specific view only for a POST request
