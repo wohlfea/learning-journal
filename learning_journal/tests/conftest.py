@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 import pytest
 from sqlalchemy import create_engine
-
 from learning_journal.models import DBSession, Base
 
 
-TEST_DATABASE_URL = 'postgresql://paulsheridan:@localhost:5432/learning-journal'
+TEST_DATABASE_URL = 'postgresql://paulsheridan:@localhost:5432/testdb'
 
 
 @pytest.fixture(scope='session')

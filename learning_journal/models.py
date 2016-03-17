@@ -2,10 +2,8 @@ from datetime import datetime
 
 from sqlalchemy import (
     Column,
-    Index,
+    # Index,
     Integer,
-    Text,
-    UnicodeText,
     Unicode,
     DateTime,
 )
@@ -30,4 +28,4 @@ class Entry(Base):
     text = Column(Unicode)
     created = Column(DateTime, default=datetime.utcnow)
 
-Index('my_index', Entry.title, unique=True, mysql_length=255)
+# Index('my_index', Entry.title, unique=True, mysql_length=255)
