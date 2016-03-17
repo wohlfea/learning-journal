@@ -2,10 +2,9 @@ from pyramid.view import view_config
 from .models import (Entry, DBSession)
 
 
-@view_config(route_name='index_route', renderer='templates/base.jinja2')
+@view_config(route_name='index_route', renderer='templates/list.jinja2')
 def index_view(request):
     entries = DBSession.query(Entry).all()
-    print('************', entries)
     return {'entries': entries}
 
 
