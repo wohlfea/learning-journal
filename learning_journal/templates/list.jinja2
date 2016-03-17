@@ -1,0 +1,9 @@
+{% estends 'base.jinja2' %}
+{% block entries%}
+    <article class="entries">
+        {% for entry in entries %}
+        <a href="{{ id }}">{{ entry.title }}</a>
+        <p>{{ created }}</p>
+        {% endfor %}
+    </article>
+{% endblock %}
