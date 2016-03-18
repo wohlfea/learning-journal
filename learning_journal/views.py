@@ -2,6 +2,8 @@ from pyramid.view import view_config
 from .models import Entry, DBSession
 from wtforms import Form, StringField, TextAreaField, validators
 from pyramid.httpexceptions import HTTPFound
+from jinja2 import Markup
+import markdown
 
 
 @view_config(route_name='index_route', renderer='templates/list.jinja2')
@@ -44,6 +46,17 @@ def edit_post(request):
         url = request.route_url('entry_route', id=entry_id)
         return HTTPFound(url)
     return{'form': form}
+
+
+def render_markdown(content, linenums=False, pygments_style='default'):
+    """Jinja2 filter to render markdown text. Copied but no understood."""
+    ext = "codehilite(linenums={linenums}, pygments_style={pygments_style})"
+    output = Markup(
+        markdown.markdown(
+            content,
+            extensions=[ext.format(**locals()), 'fenced_code'])
+    )
+    return output
 
 
 class EntryForm(Form):
