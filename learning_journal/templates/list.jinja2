@@ -2,7 +2,7 @@
 {% block content%}
     <article class="entries">
         {% for entry in entries %}
-        <a href="{{ entry.id }}">{{ entry.title }}</a>
+        <a href="/entries/{{ entry.id }}">{{ entry.title }}</a>
         <p>{{ entry.created }}</p>
         {% endfor %}
         <a href="/add">Add New</a>
