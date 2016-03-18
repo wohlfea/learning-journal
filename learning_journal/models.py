@@ -29,5 +29,3 @@ class Entry(Base):
     title = Column(Unicode(120))
     text = Column(Unicode)
     created = Column(DateTime, default=datetime.utcnow)
-
-Index('my_index', Entry.title, unique=True, mysql_length=255)

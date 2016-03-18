@@ -20,7 +20,8 @@ def entry_view(request):
 @view_config(route_name='new_route', renderer='templates/add.jinja2')
 def add_view(request):
     form = get_form_entry(request)
-    return {'form': form}
+    # import pdb; pdb.set_trace()
+    return {'form': form, 'action': request.matchdict.get('action')}
 
 
 # @view_config(route_name='edit_route', renderer='templates/edit.jinja2')
@@ -30,15 +31,17 @@ def add_view(request):
 
 class EntryForm(Form):
     title = StringField('Title', [validators.Length(min=1, max=128)])
-    text = TextAreaField('Content', [validators.InputRequired()])
+    text = TextAreaField('Content')
 
 
 def get_form_entry(request):
     form = EntryForm(request.POST)
     if request.method == 'POST' and form.validate():
         entry = Entry()
-        entry.title = form.title
-        entry.text = form.text
+        entry.title = form.title.data
+        entry.text = form.text.data
         DBSession.add(entry)
-        return HTTPFound(location="/entry/{id}")
-    return {'form': form, 'action': request.matchdict.get('action')}
+        entry_id = entry.id
+        url = request.route_url('entry_route', detail_id=entry_id)
+        return HTTPFound(url)
+    return form

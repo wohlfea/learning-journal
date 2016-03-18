@@ -1,7 +1,8 @@
 {% extends "base.jinja2" %}
 {% block content %}
-<form method="POST" action="/{{id}}">
-    <div>{{ form.title }}</div>
-    <div>{{ form.text }}</div>
+<form method=post action="/add">
+    <div>{{form.title.label}}: {{form.title()}}</div>
+    <div>{{form.text.label}}: {{form.text()}}</div>
+    <p><input type=submit value=Submit></p>
 </form>
 {% endblock %}
