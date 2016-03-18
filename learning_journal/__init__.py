@@ -26,6 +26,6 @@ def main(global_config, **settings):
     config.add_route('index_route', '/')
     config.add_route('new_route', '/add')
     config.add_route('entry_route', '/entries/{id}')
-    config.add_route('edit_route', '/{entry}/edit')
+    config.add_route('edit_route', '/entries/{entry}/edit')
     config.scan()
     return config.make_wsgi_app()
