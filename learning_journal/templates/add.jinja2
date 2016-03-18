@@ -1,0 +1,7 @@
+{% extends "base.jinja2" %}
+{% block content %}
+<form method="POST" action="/add">
+    <div>{{ form.title }}</div>
+    <div>{{ form.text }}</div>
+</form>
+{% endblock %}
