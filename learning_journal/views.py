@@ -16,6 +16,7 @@ def post_index(request):
 def view_post(request):
     entry_id = '{id}'.format(**request.matchdict)
     entry_data = DBSession.query(Entry).filter(Entry.id == entry_id).first()
+    entry_data.text = render_markdown(entry_data.text)
     return {'entry': entry_data}
 
 
@@ -45,17 +46,11 @@ def edit_post(request):
         DBSession.flush()
         url = request.route_url('entry_route', id=entry_id)
         return HTTPFound(url)
-    return{'form': form}
+    return {'form': form}
 
 
-def render_markdown(content, linenums=False, pygments_style='default'):
-    """Jinja2 filter to render markdown text. Copied but no understood."""
-    ext = "codehilite(linenums={linenums}, pygments_style={pygments_style})"
-    output = Markup(
-        markdown.markdown(
-            content,
-            extensions=[ext.format(**locals()), 'fenced_code'])
-    )
+def render_markdown(content):
+    output = Markup(markdown.markdown(content))
     return output
 
 
