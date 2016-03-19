@@ -1,35 +1,60 @@
-# from pyramid.response import Response
-# from pyramid.view import view_config
-
-# from sqlalchemy.exc import DBAPIError
-
-# from .models import (
-#     DBSession,
-#     Entry,
-#     )
+# -*- coding: utf-8 -*-
+from pyramid.view import view_config
+from .models import Entry, DBSession
+from wtforms import Form, StringField, TextAreaField, validators
+from pyramid.httpexceptions import HTTPFound
+from jinja2 import Markup
+import markdown
 
 
-# @view_config(route_name='home', renderer='templates/mytemplate.pt')
-# def my_view(request):
-#     try:
-#         one = DBSession.query(Entry).filter(Entry.title == 'one').first()
-#     except DBAPIError:
-#         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-#     return {'one': one, 'project': 'learning-journal'}
+@view_config(route_name='index_route', renderer='templates/list.jinja2')
+def post_index(request):
+    entries = DBSession.query(Entry).all()
+    return {'entries': entries}
 
 
-# conn_err_msg = """\
-# Pyramid is having a problem using your SQL database.  The problem
-# might be caused by one of the following things:
+@view_config(route_name='entry_route', renderer='templates/entry.jinja2')
+def view_post(request):
+    entry_id = '{id}'.format(**request.matchdict)
+    entry_data = DBSession.query(Entry).filter(Entry.id == entry_id).first()
+    entry_data.text = render_markdown(entry_data.text)
+    return {'entry': entry_data}
 
-# 1.  You may need to run the "initialize_learning-journal_db" script
-#     to initialize your database tables.  Check your virtual
-#     environment's "bin" directory for this script and try to run it.
 
-# 2.  Your database server may not be running.  Check that the
-#     database server referred to by the "sqlalchemy.url" setting in
-#     your "development.ini" file is running.
+@view_config(route_name='new_route', renderer='templates/add.jinja2')
+def add_post(request):
+    form = EntryForm(request.POST)
+    if request.method == 'POST' and form.validate():
+        entry = Entry()
+        entry.title = form.title.data
+        entry.text = form.text.data
+        DBSession.add(entry)
+        DBSession.flush()
+        entry_id = entry.id
+        url = request.route_url('entry_route', id=entry_id)
+        return HTTPFound(url)
+    return {'form': form, 'action': request.matchdict.get('action')}
 
-# After you fix the problem, please restart the Pyramid application to
-# try it again.
-# """
+
+@view_config(route_name='edit_route', renderer='templates/add.jinja2')
+def edit_post(request):
+    entry_id = request.matchdict['entry']
+    entry_query = DBSession.query(Entry).get(entry_id)
+    form = EntryForm(request.POST, entry_query)
+    if request.method == 'POST' and form.validate():
+        form.populate_obj(entry_query)
+        DBSession.add(entry_query)
+        DBSession.flush()
+        url = request.route_url('entry_route', id=entry_id)
+        return HTTPFound(url)
+    return {'form': form}
+
+
+def render_markdown(content):
+    output = Markup(markdown.markdown(content))
+    return output
+
+
+class EntryForm(Form):
+    title = StringField('Title', [validators.Length(min=1, max=128)])
+    text = TextAreaField('Content')
