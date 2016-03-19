@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from pyramid.view import view_config
 from .models import Entry, DBSession
 from wtforms import Form, StringField, TextAreaField, validators

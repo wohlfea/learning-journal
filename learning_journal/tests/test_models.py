@@ -10,3 +10,11 @@ def test_create_entry(dbtransaction):
     DBSession.add(new_model)
     DBSession.flush()
     assert new_model.id is not None
+
+
+def test_created(dbtransaction, new_entry):
+    assert new_entry.created is not None
+
+
+def test_id(dbtransaction, new_entry):
+    assert new_entry.id is not None
