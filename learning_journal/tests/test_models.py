@@ -18,3 +18,11 @@ def test_created(dbtransaction, new_entry):
 
 def test_id(dbtransaction, new_entry):
     assert new_entry.id is not None
+
+
+def test_post_title(dbtransaction, new_entry):
+    assert new_entry.title is not None
+
+
+def test_post_text(dbtransaction, new_entry):
+    assert new_entry.text is not None

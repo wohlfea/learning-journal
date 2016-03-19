@@ -56,7 +56,7 @@ def new_entry(request):
 @pytest.fixture()
 def app(dbtransaction):
     from webtest import TestApp
-    from journal import main
+    from learning_journal import main
     fake_settings = {'sqlalchemy.url': TEST_DATABASE}
     os.environ['JOURNAL_DB'] = TEST_DATABASE
     app = main({}, **fake_settings)
