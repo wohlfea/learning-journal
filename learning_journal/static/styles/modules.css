@@ -63,7 +63,7 @@ footer {
 .intro-banner p {
   display: block;
 }
-
+/*
 .portfolio h3 {
   text-align: left;
 }
@@ -84,7 +84,7 @@ footer {
   margin-left: 1em;
   float: right;
 }
-/*
+
 .about-me {
   text-align: center;
 }
@@ -147,7 +147,7 @@ footer {
     float: right;
     display: inline-block;
   }
-
+/*
   .about-me .education {
     text-align: right;
   }
@@ -159,7 +159,7 @@ footer {
   #footer-deco {
     width: 100%;
     position: absolute;
-  }
+  }*/
 }
 
 @media screen and (min-width: 1024px) {

@@ -14,8 +14,7 @@ def post_index(request):
 @view_config(route_name='entry_route', renderer='templates/entry.jinja2')
 def view_post(request):
     entry_id = '{id}'.format(**request.matchdict)
-    entry = DBSession.query(Entry).filter(Entry.id == entry_id).first()
-    # entry.text = render_markdown(entry.text)
+    entry = DBSession.query(Entry).get(entry_id)
     return {'entry': entry}
 
 
