@@ -3,8 +3,6 @@ from pyramid.view import view_config
 from .models import Entry, DBSession
 from wtforms import Form, StringField, TextAreaField, validators
 from pyramid.httpexceptions import HTTPFound
-from jinja2 import Markup
-import markdown
 
 
 @view_config(route_name='index_route', renderer='templates/list.jinja2')
@@ -38,7 +36,7 @@ def add_post(request):
 
 @view_config(route_name='edit_route', renderer='templates/add.jinja2')
 def edit_post(request):
-    entry_id = request.matchdict['entry']
+    entry_id = request.matchdict['id']
     entry = DBSession.query(Entry).get(entry_id)
     form = EntryForm(request.POST, entry)
     if request.method == 'POST' and form.validate():
@@ -48,11 +46,6 @@ def edit_post(request):
         url = request.route_url('entry_route', id=entry_id)
         return HTTPFound(url)
     return {'form': form}
-
-
-def render_markdown(content):
-    output = Markup(markdown.markdown(content))
-    return output
 
 
 class EntryForm(Form):
