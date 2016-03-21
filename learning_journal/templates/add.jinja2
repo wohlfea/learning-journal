@@ -1,8 +1,13 @@
-{% extends "base.jinja2" %}
+{% extends "../index.html" %}
+{% block header %}
+<li class="tab"><a href="/">Home</a></li>
+{% endblock %}
 {% block content %}
-<form method=post action="">
-    <div>{{form.title.label}}: {{form.title()}}</div>
-    <div>{{form.text.label}}: {{form.text()}}</div>
-    <p><input type=submit value=Submit></p>
+<form method=post id="new-form">
+    <div>{{form.title.label}} {{form.title()}}</div>
+    <div>{{form.text.label}} {{form.text()}}</div>
+    <label>
+        <button type=submit value=Submit>Publish</button>
+    </label>
 </form>
 {% endblock %}

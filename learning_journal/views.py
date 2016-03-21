@@ -16,9 +16,9 @@ def post_index(request):
 @view_config(route_name='entry_route', renderer='templates/entry.jinja2')
 def view_post(request):
     entry_id = '{id}'.format(**request.matchdict)
-    entry_data = DBSession.query(Entry).filter(Entry.id == entry_id).first()
-    entry_data.text = render_markdown(entry_data.text)
-    return {'entry': entry_data}
+    entry = DBSession.query(Entry).filter(Entry.id == entry_id).first()
+    # entry.text = render_markdown(entry.text)
+    return {'entry': entry}
 
 
 @view_config(route_name='new_route', renderer='templates/add.jinja2')
@@ -33,17 +33,17 @@ def add_post(request):
         entry_id = entry.id
         url = request.route_url('entry_route', id=entry_id)
         return HTTPFound(url)
-    return {'form': form, 'action': request.matchdict.get('action')}
+    return {'form': form}
 
 
 @view_config(route_name='edit_route', renderer='templates/add.jinja2')
 def edit_post(request):
     entry_id = request.matchdict['entry']
-    entry_query = DBSession.query(Entry).get(entry_id)
-    form = EntryForm(request.POST, entry_query)
+    entry = DBSession.query(Entry).get(entry_id)
+    form = EntryForm(request.POST, entry)
     if request.method == 'POST' and form.validate():
-        form.populate_obj(entry_query)
-        DBSession.add(entry_query)
+        form.populate_obj(entry)
+        DBSession.add(entry)
         DBSession.flush()
         url = request.route_url('entry_route', id=entry_id)
         return HTTPFound(url)
