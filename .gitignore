@@ -58,8 +58,8 @@ setup.cfg
 production.ini
 MANIFEST.in
 CHANGES.txt
-paul-sheridan-mockups/
 paul.ini
+ignore-git/
 
 
 # Sphinx documentation
