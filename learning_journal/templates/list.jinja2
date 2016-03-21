@@ -1,10 +1,16 @@
-{% extends 'base.jinja2' %}
+{% extends '../index.html' %}
+{% block header %}
+    <li class="tab"><a href="/add">Write a Post</a></li>
+{% endblock %}
 {% block content%}
-    <article class="entries">
-        {% for entry in entries %}
-        <a href="/entries/{{ entry.id }}">{{ entry.title }}</a>
-        <p>{{ entry.created }}</p>
-        {% endfor %}
-        <a href="/add">Add New</a>
-    </article>
+<h3>Pick an article</h3>
+<section class="posts row" id="posts">
+    <ul>
+      {% for entry in entries %}
+      <li>
+          <a href="/entries/{{ entry.id }}">{{ entry.title }} Last Updated: {{ entry.created }}</a>
+      </li>
+      {% endfor %}
+  </ul>
+</section>
 {% endblock %}
