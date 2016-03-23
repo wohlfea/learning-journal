@@ -4,6 +4,7 @@ from learning_journal.security import check_password
 from wtforms import Form, StringField, TextAreaField, validators
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
+from pyramid.response import Response
 from pyramid.security import remember, forget
 
 
@@ -34,7 +35,7 @@ def add_post(request):
         DBSession.add(entry)
         DBSession.flush()
         entry_id = entry.id
-        url = request.route_url('entry_route', id=entry_id)
+        url = request.route_url('entry', id=entry_id)
         return HTTPFound(url)
     return {'form': form}
 
@@ -50,7 +51,7 @@ def edit_post(request):
         form.populate_obj(entry)
         DBSession.add(entry)
         DBSession.flush()
-        url = request.route_url('entry_route', id=entry_id)
+        url = request.route_url('entry', id=entry_id)
         return HTTPFound(url)
     return {'form': form}
 
@@ -67,6 +68,13 @@ def login(request):
             headers = remember(request, username)
             return HTTPFound(location='/', headers=headers)
     return {'form': form}
+
+@view_config(route_name='logout',
+             renderer='templates/list.jinja2')
+def logout(request):
+    headers = forget(request)
+    return HTTPFound(location='/',
+                     headers=headers)
 
 
 class LoginForm(Form):

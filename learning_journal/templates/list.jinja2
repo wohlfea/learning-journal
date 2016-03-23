@@ -1,16 +1,19 @@
 {% extends '../index.html' %}
 {% block header %}
+{% if request.has_permission('edit') %}
     <li class="tab"><a href="/add">Write a Post</a></li>
+    <li class="tab"><a href="/logout">Log Out</a></li>
+{% else %}
+    <li class="tab"><a href="/login">Log In</a></li>
+{% endif %}
 {% endblock %}
 {% block content%}
-<h3>Pick an article</h3>
-<section class="posts row" id="posts">
-    <ul>
-      {% for entry in entries %}
-      <li>
-          <a href="/entries/{{ entry.id }}">{{ entry.title }} Last Updated: {{ entry.created }}</a>
-      </li>
-      {% endfor %}
-  </ul>
-</section>
+    <h3>Pick an article</h3>
+    <section class="posts row" id="posts">
+        <ul>
+          {% for entry in entries %}
+          <li><a href="/entries/{{ entry.id }}">{{ entry.title }} Last Updated: {{ entry.created }}</a></li>
+          {% endfor %}
+      </ul>
+    </section>
 {% endblock %}

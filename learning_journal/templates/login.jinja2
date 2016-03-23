@@ -1,8 +1,8 @@
 {% extends '../index.html' %}
 {% block content %}
-<form method='POST' action=''>
-    <div>{{form.username.label}} {{form.username()}}</div>
-    <div>{{form.password.label}} {{form.password()}}</div>
-    <button type=submit value=Submit>Submit</button>
-</form>
+    <form method='POST' action=''>
+        <div>{{form.username.label}} {{form.username()}}</div>
+        <div>{{form.password.label}} {{form.password()}}</div>
+        <button type=submit value=Submit>Submit</button>
+    </form>
 {% endblock %}

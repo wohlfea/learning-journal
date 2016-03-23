@@ -58,7 +58,9 @@ setup.cfg
 production.ini
 MANIFEST.in
 CHANGES.txt
-*.ini
+paul.ini
+production.ini
+development.ini
 ignore-git/
 
 

@@ -2,6 +2,7 @@
 from learning_journal.views import post_index, view_post
 from pyramid.testing import DummyRequest
 import os
+from bs4 import BeautifulSoup
 
 DATA_SUCCESS = {'username': 'admin', 'password': 'secret'}
 
@@ -37,6 +38,20 @@ def test_detail_response(dbtransaction, authenticated_app, new_entry):
 
 
 def test_edit_response(dbtransaction, authenticated_app, new_entry):
+    new_entry_id = new_entry.id
+    response = authenticated_app.get('/entries/{}/edit'.format(new_entry_id))
+    assert response.status_code == 200
+
+
+def test_detail_response_html(dbtransaction, authenticated_app, new_entry):
+    new_entry_id = new_entry.id
+    response = authenticated_app.get('/entries/{}'.format(new_entry_id))
+    soup = BeautifulSoup(response.html, 'html.parser')
+    anchors = soup.findall('a')
+    assert '<li class="tab"><a href="/entries/{{entry.id}}/edit">Edit</a></li>' in anchors
+
+
+def test_edit_response_html(dbtransaction, authenticated_app, new_entry):
     new_entry_id = new_entry.id
     response = authenticated_app.get('/entries/{}/edit'.format(new_entry_id))
     assert response.status_code == 200

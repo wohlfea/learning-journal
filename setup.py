@@ -23,7 +23,7 @@ requires = [
     'passlib',
 ]
 
-test_require = ['pytest', 'pytest-watch', 'tox', 'WebTest', 'pytest-cov']
+test_require = ['pytest', 'pytest-watch', 'tox', 'WebTest', 'pytest-cov', 'beautifulsoup4', 'html5lib']
 dev_require = ['ipython', 'pyramid-ipython']
 
 

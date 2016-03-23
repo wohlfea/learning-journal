@@ -1,13 +1,14 @@
 {% extends "../index.html" %}
 {% block header %}
-<li class="tab"><a href="/">Home</a></li>
+    <li class="tab"><a href="/logout">Log Out</a></li>
+    <li class="tab"><a href="/">Home</a></li>
 {% endblock %}
 {% block content %}
-<form method=post id="new-form">
-    <div>{{form.title.label}} {{form.title()}}</div>
-    <div>{{form.text.label}} {{form.text()}}</div>
-    <label>
-        <button type=submit value=Submit>Publish</button>
-    </label>
-</form>
+    <form method=post id="new-form">
+        <div>{{form.title.label}} {{form.title()}}</div>
+        <div>{{form.text.label}} {{form.text()}}</div>
+        <label>
+            <button type=submit value=Submit>Publish</button>
+        </label>
+    </form>
 {% endblock %}
