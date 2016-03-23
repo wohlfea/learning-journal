@@ -1,24 +1,32 @@
 # -*- coding: utf-8 -*-
-from pyramid.view import view_config
-from .models import Entry, DBSession
+from learning_journal.models import Entry, DBSession
+from learning_journal.security import check_password
 from wtforms import Form, StringField, TextAreaField, validators
+from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
+from pyramid.security import remember, forget
 
 
-@view_config(route_name='index_route', renderer='templates/list.jinja2')
+@view_config(route_name='index',
+             renderer='templates/list.jinja2',
+             permission='view')
 def post_index(request):
     entries = DBSession.query(Entry).all()
     return {'entries': entries}
 
 
-@view_config(route_name='entry_route', renderer='templates/entry.jinja2')
+@view_config(route_name='entry',
+             renderer='templates/entry.jinja2',
+             permission='view')
 def view_post(request):
     entry_id = '{id}'.format(**request.matchdict)
     entry = DBSession.query(Entry).get(entry_id)
     return {'entry': entry}
 
 
-@view_config(route_name='new_route', renderer='templates/add.jinja2')
+@view_config(route_name='add',
+             renderer='templates/add.jinja2',
+             permission='edit')
 def add_post(request):
     form = EntryForm(request.POST)
     if request.method == 'POST' and form.validate():
@@ -33,7 +41,9 @@ def add_post(request):
     return {'form': form}
 
 
-@view_config(route_name='edit_route', renderer='templates/add.jinja2')
+@view_config(route_name='edit',
+             renderer='templates/add.jinja2',
+             permission='edit')
 def edit_post(request):
     entry_id = request.matchdict['id']
     entry = DBSession.query(Entry).get(entry_id)
@@ -45,6 +55,24 @@ def edit_post(request):
         url = request.route_url('entry_route', id=entry_id)
         return HTTPFound(url)
     return {'form': form}
+
+
+@view_config(route_name='login',
+             renderer='templates/login.jinja2')
+def login(request):
+    form = LoginForm(request.POST)
+    if request.method == 'POST' and form.validate():
+        username = form.username.data
+        password = form.password.data
+        if check_password(password):
+            headers = remember(request, username)
+            return HTTPFound(location='/', headers=headers)
+    return {'form': form}
+
+
+class LoginForm(Form):
+    username = StringField('Username', [validators.Length(min=1, max=128)])
+    password = StringField('Password', [validators.Length(min=1, max=128)])
 
 
 class EntryForm(Form):

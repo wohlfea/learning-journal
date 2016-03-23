@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
-import pytest
 from sqlalchemy import create_engine
-import os
-import webtest
-
-
 from learning_journal.models import DBSession, Base, Entry
+import pytest
+import os
 
 
 TEST_DATABASE = 'postgresql://paulsheridan:@localhost:5432/testdb'
+
+
+@pytest.fixture()
+def auth_env():
+    from learning_journal.security import pwd_context
+    os.environ['AUTH_PASSWORD'] = pwd_context.encrypt('secret')
+    os.environ['AUTH_USERNAME'] = 'name'
 
 
 @pytest.fixture(scope='session')
@@ -16,6 +20,7 @@ def sqlengine(request):
     engine = create_engine(TEST_DATABASE)
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
+    auth_env()
 
     def teardown():
         Base.metadata.drop_all(engine)
@@ -61,3 +66,11 @@ def app(dbtransaction):
     os.environ['JOURNAL_DB'] = TEST_DATABASE
     app = main({}, **fake_settings)
     return TestApp(app)
+
+
+# @pytest.fixture()
+# def authenticated_app(app, auth_env):
+#     data = {'username': 'admin',
+#             'password': 'secret'}
+#     app.post('/login', data)
+#     return app

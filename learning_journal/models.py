@@ -1,6 +1,14 @@
 from datetime import datetime
 from jinja2 import Markup
+from sqlalchemy.ext.declarative import declarative_base
+from zope.sqlalchemy import ZopeTransactionExtension
 import markdown
+
+from pyramid.security import (
+    Allow,
+    Everyone,
+    Authenticated,
+    )
 
 from sqlalchemy import (
     Column,
@@ -9,14 +17,16 @@ from sqlalchemy import (
     DateTime,
 )
 
-from sqlalchemy.ext.declarative import declarative_base
-
 from sqlalchemy.orm import (
     scoped_session,
     sessionmaker,
 )
 
-from zope.sqlalchemy import ZopeTransactionExtension
+
+class MyRoot(object):
+    __acl__ = [(Allow, Everyone, 'view'),
+               (Allow, Authenticated, 'edit')]
+
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 Base = declarative_base()
