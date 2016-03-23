@@ -6,13 +6,14 @@ import os
 
 
 TEST_DATABASE = 'postgresql://paulsheridan:@localhost:5432/testdb'
+DATA_SUCCESS = {'username': 'admin', 'password': 'secret'}
 
 
 @pytest.fixture()
 def auth_env():
     from learning_journal.security import pwd_context
     os.environ['AUTH_PASSWORD'] = pwd_context.encrypt('secret')
-    os.environ['AUTH_USERNAME'] = 'name'
+    os.environ['AUTH_USERNAME'] = 'admin'
 
 
 @pytest.fixture(scope='session')
@@ -68,9 +69,7 @@ def app(dbtransaction):
     return TestApp(app)
 
 
-# @pytest.fixture()
-# def authenticated_app(app, auth_env):
-#     data = {'username': 'admin',
-#             'password': 'secret'}
-#     app.post('/login', data)
-#     return app
+@pytest.fixture()
+def authenticated_app(app, auth_env):
+    app.post('/login', DATA_SUCCESS, status='3*')
+    return app

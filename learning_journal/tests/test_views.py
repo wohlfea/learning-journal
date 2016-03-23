@@ -4,7 +4,6 @@ from pyramid.testing import DummyRequest
 import os
 
 DATA_SUCCESS = {'username': 'admin', 'password': 'secret'}
-DATA_FAIL_USER = {'username': 'whatever', 'password': 'secret'}
 
 
 def test_post_index(dbtransaction, new_entry):
@@ -21,26 +20,26 @@ def test_view_post(dbtransaction, new_entry):
     assert response_dict['entry'] == new_entry
 
 
-# def test_list_response(dbtransaction, app, new_entry):
-#     response = app.get('/')
-#     assert response.status_code == 200
-#
-#
-# def test_add_response(dbtransaction, app):
-#     response = app.get('/add')
-#     assert response.status_code == 200
-#
-#
-# def test_detail_response(dbtransaction, app, new_entry):
-#     new_entry_id = new_entry.id
-#     response = app.get('/entries/{}'.format(new_entry_id))
-#     assert response.status_code == 200
-#
-#
-# def test_edit_response(dbtransaction, app, new_entry):
-#     new_entry_id = new_entry.id
-#     response = app.get('/entries/{}/edit'.format(new_entry_id))
-#     assert response.status_code == 200
+def test_access(authenticated_app):
+    response = authenticated_app.get('/')
+    assert response.status_code == 200
+
+
+def test_add_response(dbtransaction, authenticated_app):
+    response = authenticated_app.get('/add')
+    assert response.status_code == 200
+
+
+def test_detail_response(dbtransaction, authenticated_app, new_entry):
+    new_entry_id = new_entry.id
+    response = authenticated_app.get('/entries/{}'.format(new_entry_id))
+    assert response.status_code == 200
+
+
+def test_edit_response(dbtransaction, authenticated_app, new_entry):
+    new_entry_id = new_entry.id
+    response = authenticated_app.get('/entries/{}/edit'.format(new_entry_id))
+    assert response.status_code == 200
 
 
 def test_password_exist(app):
@@ -83,7 +82,21 @@ def test_post_login_password_fail(app):
     assert response.status_code == 200
 
 
-def test_post_login_username_fail(app):
-    data = {'username': 'whatever', 'password': 'secret'}
-    response = app.post('/login', data)
-    assert response.status_code == 200
+def test_post_login_redirect(app, auth_env):
+    response = app.post('/login', DATA_SUCCESS)
+    headers = response.headers
+    domain = 'http://localhost'
+    actual_path = headers.get('Location', '')[len(domain):]
+    assert actual_path == '/'
+
+
+def test_post_login_auth_tkt_resent(app, auth_env):
+    response = app.post('/login', DATA_SUCCESS)
+    headers = response.headers
+    cookies_set = headers.getall('Set-Cookie')
+    assert cookies_set
+    for cookie in cookies_set:
+        if cookie.startswith('auth_tkt'):
+            break
+        else:
+            assert False

@@ -27,6 +27,9 @@ class MyRoot(object):
     __acl__ = [(Allow, Everyone, 'view'),
                (Allow, Authenticated, 'edit')]
 
+    def __init__(self, request):
+        self.request = request
+
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 Base = declarative_base()

@@ -8,16 +8,14 @@ from pyramid.security import remember, forget
 
 
 @view_config(route_name='index',
-             renderer='templates/list.jinja2',
-             permission='view')
+             renderer='templates/list.jinja2')
 def post_index(request):
     entries = DBSession.query(Entry).all()
     return {'entries': entries}
 
 
 @view_config(route_name='entry',
-             renderer='templates/entry.jinja2',
-             permission='view')
+             renderer='templates/entry.jinja2')
 def view_post(request):
     entry_id = '{id}'.format(**request.matchdict)
     entry = DBSession.query(Entry).get(entry_id)
@@ -64,6 +62,7 @@ def login(request):
     if request.method == 'POST' and form.validate():
         username = form.username.data
         password = form.password.data
+        # import pdb; pdb.set_trace()
         if check_password(password):
             headers = remember(request, username)
             return HTTPFound(location='/', headers=headers)
