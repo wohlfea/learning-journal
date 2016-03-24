@@ -4,8 +4,13 @@ from learning_journal.security import check_password
 from wtforms import Form, StringField, TextAreaField, validators
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
-from pyramid.response import Response
+# from pyramid.response import Response
 from pyramid.security import remember, forget
+from pyramid.i18n import get_localizer
+try:
+    from wtforms.ext.csrf import SecureForm
+except ImportError:
+    from wtforms import Form as SecureForm
 
 
 @view_config(route_name='index',
@@ -63,18 +68,17 @@ def login(request):
     if request.method == 'POST' and form.validate():
         username = form.username.data
         password = form.password.data
-        # import pdb; pdb.set_trace()
         if check_password(password):
             headers = remember(request, username)
             return HTTPFound(location='/', headers=headers)
     return {'form': form}
 
+
 @view_config(route_name='logout',
              renderer='templates/list.jinja2')
 def logout(request):
     headers = forget(request)
-    return HTTPFound(location='/',
-                     headers=headers)
+    return HTTPFound(location='/', headers=headers)
 
 
 class LoginForm(Form):
@@ -85,3 +89,31 @@ class LoginForm(Form):
 class EntryForm(Form):
     title = StringField('Title', [validators.Length(min=1, max=128)])
     text = TextAreaField('Content')
+
+
+class PyramidTranslations(object):
+    """An WTForms translations handler which uses the Pyramid
+    :py:class:`Localizer <pyramid.i18n.Localizer>`.
+    """
+    def __init__(self, request):
+        self.localizer = get_localizer(request)
+        self.gettext = self.localizer.translate
+        self.ngettext = self.localizer.pluralize
+
+
+class Form(SecureForm):
+    """Base form class supporting CSRF and translations."""
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
+        self._translations = PyramidTranslations(self.request)
+        SecureForm.__init__(self, *args, **kwargs)
+
+    def _get_translations(self):
+        return self._translations
+
+    def generate_csrf_token(self, csrf_context):
+        return self.request.session.get_csrf_token()
+
+    def validate_csrf_token(self, field):
+        if field.data != field.current_token:
+            raise ValueError('Invalid CSRF')
