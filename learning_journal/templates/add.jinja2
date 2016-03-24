@@ -1,13 +1,22 @@
 {% extends "../index.html" %}
 {% block header %}
-<li class="tab"><a href="/">Home</a></li>
+    <li class="tab"><a href="/logout">Log Out</a></li>
+    <li class="tab"><a href="/">Home</a></li>
 {% endblock %}
 {% block content %}
 <form method=post id="new-form">
-    <div>{{form.title.label}} {{form.title()}}</div>
-    <div>{{form.text.label}} {{form.text()}}</div>
-    <label>
-        <button type=submit value=Submit>Publish</button>
-    </label>
+  <div class="row">
+    <div class="six columns">
+      <label for="exampleEmailInput">Title This Bastard</label>
+      {{ form.title(class_="u-full-width") }}
+    </div>
+    <div class="six columns">
+    </div>
+  </div>
+  <label>Write Your Stuff</label>
+  {{ form.text(class_="u-full-width") }}
+  <label>
+      <button class="button-primary" type="submit" value="Submit">Crush It!</button>
+  </label>
 </form>
 {% endblock %}
