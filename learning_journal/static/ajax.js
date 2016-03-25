@@ -11,10 +11,3 @@ $('#add-entry').submit(function(event) {
         }
     });
 });
-
-
-// $(document).on('submit', function(event) {
-//     event.preventDefault();
-//     var data = $('#add-form').serialize();
-//     $.post('/add_ajax', data);
-// });
