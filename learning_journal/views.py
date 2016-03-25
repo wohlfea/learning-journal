@@ -22,6 +22,22 @@ def view_post(request):
     return {'entry': entry}
 
 
+@view_config(route_name='add_json', renderer='json', xhr=True)
+def add_ajax_post(request):
+    # import pdb; pdb.set_trace()
+    form = EntryForm(request.POST)
+    if request.method == 'POST' and form.validate():
+        entry = Entry()
+        entry.title = form.title.data
+        entry.text = form.text.data
+        DBSession.add(entry)
+        DBSession.flush()
+        entry_id = entry.id
+        url = request.route_url('entry', id=entry_id)
+        return HTTPFound(url)
+    return{'form': form}
+
+
 @view_config(route_name='add', request_method='GET',
              renderer='templates/add.jinja2',
              permission='edit')
