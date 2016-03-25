@@ -1,9 +1,9 @@
 {% extends '../index.html' %}
 {% block content %}
-    <input type="hidden" name="csrf_token" value="${request.session.get_csrf_token()}"/>
     <form method='POST' action=''>
+        <input type="hidden" name="csrf_token" value="{{ request.session.get_csrf_token() }}">
         <div>{{ form.username.label }} {{ form.username() }}</div>
         <div>{{ form.password.label }} {{ form.password() }}</div>
-        <button type=submit value=Submit>Submit</button>
+        <button type='submit' value='Submit'>Submit</button>
     </form>
 {% endblock %}

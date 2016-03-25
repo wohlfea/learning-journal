@@ -71,5 +71,7 @@ def app(dbtransaction):
 
 @pytest.fixture()
 def authenticated_app(app, auth_env):
-    app.post('/login', DATA_SUCCESS, status='3*')
+    response = app.get('/login')
+    headers = response.headers
+    app.post('/login', DATA_SUCCESS, status='3*', headers=headers)
     return app

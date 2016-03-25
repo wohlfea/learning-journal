@@ -1,16 +1,10 @@
 # -*- coding: utf-8 -*-
 from learning_journal.models import Entry, DBSession
 from learning_journal.security import check_password
-from wtforms import Form, StringField, TextAreaField, validators
+from learning_journal.forms import LoginForm, EntryForm
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
-# from pyramid.response import Response
 from pyramid.security import remember, forget
-from pyramid.i18n import get_localizer
-try:
-    from wtforms.ext.csrf import SecureForm
-except ImportError:
-    from wtforms import Form as SecureForm
 
 
 @view_config(route_name='index',
@@ -28,7 +22,10 @@ def view_post(request):
     return {'entry': entry}
 
 
-@view_config(route_name='add',
+@view_config(route_name='add', request_method='GET',
+             renderer='templates/add.jinja2',
+             permission='edit')
+@view_config(route_name='add', check_csrf=True,
              renderer='templates/add.jinja2',
              permission='edit')
 def add_post(request):
@@ -45,7 +42,10 @@ def add_post(request):
     return {'form': form}
 
 
-@view_config(route_name='edit',
+@view_config(route_name='edit', request_method='GET',
+             renderer='templates/add.jinja2',
+             permission='edit')
+@view_config(route_name='edit', check_csrf=True,
              renderer='templates/add.jinja2',
              permission='edit')
 def edit_post(request):
@@ -61,7 +61,9 @@ def edit_post(request):
     return {'form': form}
 
 
-@view_config(route_name='login',
+@view_config(route_name='login', check_csrf=True,
+             renderer='templates/login.jinja2')
+@view_config(route_name='login', request_method='GET',
              renderer='templates/login.jinja2')
 def login(request):
     form = LoginForm(request.POST)
@@ -79,41 +81,3 @@ def login(request):
 def logout(request):
     headers = forget(request)
     return HTTPFound(location='/', headers=headers)
-
-
-class LoginForm(Form):
-    username = StringField('Username', [validators.Length(min=1, max=128)])
-    password = StringField('Password', [validators.Length(min=1, max=128)])
-
-
-class EntryForm(Form):
-    title = StringField('Title', [validators.Length(min=1, max=128)])
-    text = TextAreaField('Content')
-
-
-class PyramidTranslations(object):
-    """An WTForms translations handler which uses the Pyramid
-    :py:class:`Localizer <pyramid.i18n.Localizer>`.
-    """
-    def __init__(self, request):
-        self.localizer = get_localizer(request)
-        self.gettext = self.localizer.translate
-        self.ngettext = self.localizer.pluralize
-
-
-class Form(SecureForm):
-    """Base form class supporting CSRF and translations."""
-    def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop('request')
-        self._translations = PyramidTranslations(self.request)
-        SecureForm.__init__(self, *args, **kwargs)
-
-    def _get_translations(self):
-        return self._translations
-
-    def generate_csrf_token(self, csrf_context):
-        return self.request.session.get_csrf_token()
-
-    def validate_csrf_token(self, field):
-        if field.data != field.current_token:
-            raise ValueError('Invalid CSRF')
