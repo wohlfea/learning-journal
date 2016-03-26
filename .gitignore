@@ -59,7 +59,6 @@ production.ini
 MANIFEST.in
 CHANGES.txt
 paul.ini
-production.ini
 development.ini
 ignore-git/
 
