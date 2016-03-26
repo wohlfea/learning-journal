@@ -8,6 +8,7 @@ from .models import (
     Base,
     MyRoot,
     )
+import os
 
 
 def make_session(settings):
@@ -20,7 +21,12 @@ def make_session(settings):
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
-    authn_policy = AuthTktAuthenticationPolicy('secret', hashalg='sha256')
+    if 'DATABASE_URL' in os.environ:
+        settings['sqlalchemy.url'] = os.environ['DATABASE_URL']
+    engine = engine_from_config(settings, 'sqlalchemy.')
+    auth_secret = os.environ.get('AUTH_SECRET', 'secret')
+    authn_policy = AuthTktAuthenticationPolicy(secret=auth_secret,
+                                               hashalg='sha256')
     authz_policy = ACLAuthorizationPolicy()
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)

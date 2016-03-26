@@ -4,5 +4,6 @@ import os
 
 def check_password(password):
     hashed_password = os.environ.get('AUTH_PASSWORD', 'password failure')
-    print(hashed_password)
+    # hash = pwd_context.encrypt(password)
+    # print('hash:', hash)
     return pwd_context.verify(password, hashed_password)

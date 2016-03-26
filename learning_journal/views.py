@@ -5,6 +5,7 @@ from learning_journal.forms import LoginForm, EntryForm
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import remember, forget
+import os
 
 
 @view_config(route_name='index',
@@ -126,9 +127,10 @@ def login(request):
     if request.method == 'POST' and form.validate():
         username = form.username.data
         password = form.password.data
-        if check_password(password):
-            headers = remember(request, username)
-            return HTTPFound(location='/', headers=headers)
+        if username == os.environ['AUTH_USERNAME']:
+            if check_password(password):
+                headers = remember(request, username)
+                return HTTPFound(location='/', headers=headers)
     return {'form': form}
 
 
