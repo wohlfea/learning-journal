@@ -57,8 +57,6 @@ coverage.xml
 setup.cfg
 MANIFEST.in
 paul.ini
-ignore-git/
-
 
 # Sphinx documentation
 docs/_build/
