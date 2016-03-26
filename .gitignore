@@ -56,9 +56,7 @@ coverage.xml
 .DS_Store
 setup.cfg
 MANIFEST.in
-CHANGES.txt
 paul.ini
-development.ini
 ignore-git/
 
 
