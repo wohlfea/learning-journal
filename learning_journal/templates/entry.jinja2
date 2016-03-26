@@ -1,4 +1,4 @@
-{% extends "../index.html" %}
+{% extends "index.html" %}
 {% block header %}
 {% if request.has_permission('edit') %}
     <li class="tab"><a href="/logout">Log Out</a></li>
@@ -10,8 +10,8 @@
 {% endblock %}
 {% block content %}
     <h4>{{ entry.title }}</h4>
-        <div class="entry-text">
+        <article class="entry-text">
             <p>{{ entry.rendered_text }} </p>
             <p>Last Updated: {{ entry.created }}</p>
-        </div>
+        </article>
 {% endblock %}

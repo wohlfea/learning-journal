@@ -1,6 +1,6 @@
-{% extends '../index.html' %}
+{% extends 'index.html' %}
 {% block content %}
-    <form method='POST' action=''>
+    <form method='POST' action="" id="login">
         <input type="hidden" name="csrf_token" value="{{ request.session.get_csrf_token() }}">
         <div>{{ form.username.label }} {{ form.username() }}</div>
         <div>{{ form.password.label }} {{ form.password() }}</div>
