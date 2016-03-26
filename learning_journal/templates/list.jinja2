@@ -11,12 +11,12 @@
     <h3>Absorb these words into your soul:</h3>
     <section class="posts row" id="posts">
         <ul>
-          {% for entry in entries %}
+            {% for entry in entries %}
               <li>
                   <a href="/entries/{{ entry.id }}">{{ entry.title }}</a>
                   <p>Last Updated: {{ entry.created }}</p>
               </li>
-          {% endfor %}
+            {% endfor %}
         </ul>
     </section>
 {% endblock %}
